@@ -18,6 +18,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Create env variables if needed
+        run: |
+          if [[ -z "${{ secrets.env_file }}" ]]; then
+            echo "env_file secret not found"
+          else
+            echo "${{ secrets.env_file }}" > env_file
+            set -o allexport
+            source env_file
+            set +o allexport
+            rm env_file
+          fi
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
