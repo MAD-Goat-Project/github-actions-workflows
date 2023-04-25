@@ -2,6 +2,9 @@ name: Create and publish a Docker image
 
 on:
   workflow_call:
+    secrets:
+      ENV_FILE:
+        required: false
 
 env:
   REGISTRY: ghcr.io
