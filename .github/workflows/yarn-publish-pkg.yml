@@ -16,7 +16,7 @@ jobs:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
           always-auth: true
-      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - run: echo "@MAD-Goat-Project://npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - run: yarn install
       - run: yarn build
       - run: yarn publish
