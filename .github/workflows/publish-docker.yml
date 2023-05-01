@@ -44,12 +44,11 @@ jobs:
           fi
 
       - name: Create .npmrc file
+        if: ${{ github.event.inputs.has_npmrc == 'true' }}
         run: |
           echo "@:registry=https://npm.pkg.github.com" > .npmrc
           echo "@MAD-Goat-Project:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
-
-          if: ${{ inputs.has_npmrc == true }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
