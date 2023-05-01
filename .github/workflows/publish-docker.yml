@@ -2,6 +2,11 @@ name: Create and publish a Docker image
 
 on:
   workflow_call:
+    inputs:
+      HAS_NPMRC:
+        description: "Does the repository have a .npmrc file?"
+        required: false
+        default: false
     secrets:
       ENV_FILE:
         required: false
@@ -32,6 +37,14 @@ jobs:
             set +o allexport
             rm env_file
           fi
+
+      - name: Create .npmrc file
+        run: |
+          echo "@:registry=https://npm.pkg.github.com" > .npmrc
+          echo "@MAD-Goat-Project:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+
+          if: ${{ inputs.HAS_NPMRC == 'true' }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
