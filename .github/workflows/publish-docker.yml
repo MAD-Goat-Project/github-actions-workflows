@@ -3,10 +3,15 @@ name: Create and publish a Docker image
 on:
   workflow_call:
     inputs:
-      HAS_NPMRC:
-        description: "Does the repository have a .npmrc file?"
+      has_npmrc:
         required: false
+        type: boolean
         default: false
+        description: |
+          If true, a .npmrc file will be created to allow the use of private npm packages.
+          This is useful if you are using a private npm package in your project.
+          If you are not using a private npm package, you can set this to false.
+          If you are not sure, you can leave it to false.
     secrets:
       ENV_FILE:
         required: false
@@ -44,7 +49,7 @@ jobs:
           echo "@MAD-Goat-Project:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
 
-          if: ${{ inputs.HAS_NPMRC == 'true' }}
+          if: ${{ inputs.HAS_NPMRC == true }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
