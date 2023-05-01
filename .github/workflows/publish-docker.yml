@@ -42,8 +42,10 @@ jobs:
             set +o allexport
             rm env_file
           fi
-
-      - name: Create .npmrc file
+      - name: Print Inputs
+        run: |
+          echo "has_npmrc: ${{ github.event.inputs.has_npmrc }}"
+      - name: Create .npmrc file if needed
         if: ${{ github.event.inputs.has_npmrc == true}}
         run: |
           echo "@:registry=https://npm.pkg.github.com" > .npmrc
