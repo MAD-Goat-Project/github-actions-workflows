@@ -11,9 +11,9 @@ jobs:
           node-version: 18
       - name: Create .npmrc file
         run: |
-          echo "@:registry=https://npm.pkg.github.com"
-          @MAD-Goat-Project:registry=https://npm.pkg.github.com
-          //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
+          echo "@:registry=https://npm.pkg.github.com \
+          @MAD-Goat-Project:registry=https://npm.pkg.github.com \
+          //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"  > .npmrc
       - run: yarn install
       - run: yarn run lint:check
       - run: yarn run build
