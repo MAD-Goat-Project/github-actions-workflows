@@ -5,10 +5,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
+      - name: Create .npmrc file
+        run: |
+          echo "@:registry=https://npm.pkg.github.com"
+          @MAD-Goat-Project:registry=https://npm.pkg.github.com
+          //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
       - run: yarn install
       - run: yarn run lint:check
       - run: yarn run build
