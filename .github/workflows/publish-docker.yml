@@ -44,7 +44,7 @@ jobs:
           fi
 
       - name: Create .npmrc file
-        if: ${{ github.event.inputs.has_npmrc == 'true' }}
+        if: ${{ github.event.inputs.has_npmrc == true}}
         run: |
           echo "@:registry=https://npm.pkg.github.com" > .npmrc
           echo "@MAD-Goat-Project:registry=https://npm.pkg.github.com" >> .npmrc
