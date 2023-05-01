@@ -42,9 +42,7 @@ jobs:
             set +o allexport
             rm env_file
           fi
-      - name: Print Inputs
-        run: |
-          echo "has_npmrc: ${{ inputs.has_npmrc }}"
+
       - name: Create .npmrc file if needed
         if: ${{ inputs.has_npmrc == true}}
         run: |
