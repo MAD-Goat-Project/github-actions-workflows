@@ -12,6 +12,12 @@ on:
           This is useful if you are using a private npm package in your project.
           If you are not using a private npm package, you can set this to false.
           If you are not sure, you can leave it to false.
+      working_directory:
+        required: false
+        type: string
+        default: .
+        description: |
+          The working directory of the project.
     secrets:
       ENV_FILE:
         required: false
@@ -23,6 +29,10 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.working_directory }}
     permissions:
       contents: read
       packages: write
