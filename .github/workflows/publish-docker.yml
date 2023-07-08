@@ -32,7 +32,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.event.inputs.working_directory }}
+        working-directory: ${{ inputs.working_directory }}
     permissions:
       contents: read
       packages: write
