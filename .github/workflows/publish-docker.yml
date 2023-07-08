@@ -18,6 +18,12 @@ on:
         default: .
         description: |
           The working directory of the project.
+      dockerfile_context:
+        required: false
+        type: string
+        default: .
+        description: |
+          The path to the Dockerfile.
     secrets:
       ENV_FILE:
         required: false
@@ -82,7 +88,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ${{ inputs.dockerfile_context }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
