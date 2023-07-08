@@ -27,20 +27,13 @@ on:
         description: |
           The path to the Dockerfile.
 
-      image_name:
-        required: false
-        type: string
-        default: ${{ github.repository }}
-        description: |
-          The name of the image to build and push.
-
     secrets:
       ENV_FILE:
         required: false
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ inputs.image_name }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
