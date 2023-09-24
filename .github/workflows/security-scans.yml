@@ -1,10 +1,9 @@
 on:
   workflow_call:
 
-name: Security Scans
 jobs:
   sonarqube:
-    name: SonarQube Trigger
+    name: SonarQube Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checking out
@@ -19,6 +18,7 @@ jobs:
           login: ${{ secrets.SONAR_TOKEN }}
 
   kics:
+    name: KICS Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
