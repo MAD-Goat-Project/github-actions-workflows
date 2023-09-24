@@ -1,7 +1,6 @@
 on:
   workflow_call:
 
-name: Security Scans
 jobs:
   sonarqube:
     name: SonarQube Trigger
