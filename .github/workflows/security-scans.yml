@@ -4,8 +4,8 @@ on:
       path:
         type: string
         description: "Path to the file or directory to scan"
-        required: true
-        default: "./"
+        required: false
+        default: "."
 
 jobs:
   sonarqube:
