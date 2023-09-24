@@ -1,5 +1,11 @@
 on:
   workflow_call:
+    inputs:
+      path:
+        type: string
+        description: "Path to the file or directory to scan"
+        required: true
+        default: "."
 
 jobs:
   sonarqube:
@@ -25,7 +31,7 @@ jobs:
       - name: run kics Scan
         uses: checkmarx/kics-github-action@v1.7.0
         with:
-          path: Dockerfile
+          path: ${{ inputs.path }}
           token: ${{ secrets.GITHUB_TOKEN }}
           output_path: myResults/
           ignore_on_exit: results
