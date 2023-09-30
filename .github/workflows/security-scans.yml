@@ -54,7 +54,7 @@ jobs:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
       - name: Semgrep Sarif
-        run: semgrep --sarif results.sarif --config auto
+        run: semgrep --sarif --output results.sarif --config auto
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
