@@ -29,9 +29,14 @@ jobs:
         with:
           path: Dockerfile
           token: ${{ secrets.GITHUB_TOKEN }}
-          output_path: myResults/
+          output_path: "results.sarif"
           ignore_on_exit: results
           enable_comments: true
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
 
   semgrep:
     name: Semgrep Scan
@@ -42,12 +47,17 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
     steps:
       - uses: actions/checkout@v3
-      - run: semgrep ci
+      - run: semgrep ci --sarif --output results.sarif
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
+
   bearer:
-    name: Bearer
+    name: Bearer Scan (SARIF)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,3 +66,12 @@ jobs:
         uses: bearer/bearer-action@v2
         with:
           api-key: ${{ secrets.BEARER_TOKEN }}
+          exit-code: 0
+          format: sarif
+          output: results.sarif
+
+      - name: Upload SARIF file
+        if: always()
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
