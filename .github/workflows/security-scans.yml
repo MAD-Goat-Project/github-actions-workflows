@@ -13,6 +13,11 @@ on:
         description: "Run KICS Scan"
         required: false
         default: true
+      kics_scan_path:
+        type: string
+        description: "Path to scan"
+        required: false
+        default: "."
       run_semgrep_scan:
         type: boolean
         description: "Run Semgrep Scan"
@@ -50,10 +55,10 @@ jobs:
       - name: run kics Scan
         uses: checkmarx/kics-github-action@v1.7.0
         with:
-          path: ${{ inputs.path }}
+          path: ${{ inputs.kics_scan_path }}
           token: ${{ secrets.GITHUB_TOKEN }}
           ignore_on_exit: results
-          enable_comments: true
+          enable_comments: ${{ github.event_name == 'pull_request'}}
           output_path: results-dir
           output_formats: "json,sarif"
 
