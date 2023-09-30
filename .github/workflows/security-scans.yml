@@ -29,14 +29,15 @@ jobs:
         with:
           path: Dockerfile
           token: ${{ secrets.GITHUB_TOKEN }}
-          output_path: "results.sarif"
           ignore_on_exit: results
-          #enable_comments: true
+          enable_comments: true
+          output_path: results-dir
+          output_formats: "json,sarif"
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results.sarif
+          sarif_file: results-dir/results.sarif
 
   semgrep:
     name: Semgrep Scan
@@ -53,7 +54,7 @@ jobs:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
       - name: Semgrep Sarif
-        run: semgrep --sarif results.sarif
+        run: semgrep --sarif results.sarif --config auto
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
