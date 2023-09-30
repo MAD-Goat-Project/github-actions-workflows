@@ -31,12 +31,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           output_path: "results.sarif"
           ignore_on_exit: results
-          enable_comments: true
+          #enable_comments: true
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results-dir/results.sarif
+          sarif_file: results.sarif
 
   semgrep:
     name: Semgrep Scan
@@ -47,9 +47,13 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
     steps:
       - uses: actions/checkout@v3
-      - run: semgrep ci --config auto --output scan_results.sarif --sarif
+      - name: Semgrep CI
+        run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+
+      - name: Semgrep Sarif
+        run: semgrep --sarif results.sarif
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
