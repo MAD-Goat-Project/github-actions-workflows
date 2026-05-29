@@ -32,6 +32,6 @@ jobs:
       - run: yarn run build
       - run: npm test
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3.1.6
+        uses: step-security/codecov-action@87e66f47a0f8ab4cae465a323eb9ec63d8b6b875 # v6.0.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
